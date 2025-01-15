@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from decouple import config, UndefinedValueError
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#dt2jq2(9isqycyj3v9nez*d=jh5%9im%zo(l^v#!cdn76__l9'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'testserver',
+    '.physiquemagnifique.com'
+]
 
 
 # Application definition
@@ -73,12 +80,19 @@ WSGI_APPLICATION = 'physmagPrices.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DBNAME', default=''),
+            'USER': config('DBUSER', default=''),
+            'PASSWORD': config('DBPWD', default=''),
+            'HOST': config('DBHOST', default='localhost'),
+            'PORT': config('DBPORT', default='5432'),
+        }
     }
-}
+except UndefinedValueError as e:
+    raise ImproperlyConfigured(f"Missing database configuration: {e}") from e
 
 
 # Password validation
@@ -105,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -113,11 +127,54 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+MY_PROJECT_STATIC_FILES = os.path.join(BASE_DIR, 'static')
+
+# URL to use when referring to static files located in STATIC_ROOT.
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+# https://docs.djangoproject.com/en/4.2/howto/static-files/#deployment
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# List of all static file directory locations
+# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-STATICFILES_DIRS
+
+STATICFILES_DIRS = [
+    MY_PROJECT_STATIC_FILES
+]
+
+# Compression and Caching support for static files
+# https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
+
+STORAGES = {
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# The URL or named URL pattern where requests are redirected for login when
+# using the login_required() decorator, LoginRequiredMixin, or AccessMixin.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-LOGIN_URL
+
+LOGIN_URL = 'login'
+
+# CSRF Tokens
+# https://docs.djangoproject.com/en/4.2/howto/csrf/
+
+CSRF_TRUSTED_ORIGINS = ['https://qrcodes.physiquemagnifique.com','http://127.0.0.1:8000']
+
+# Cloudinary
+CLOUDINARY = {
+    'cloud_name': config('CLOUD_NAME'),
+    'api_key': config('CLOUD_API_KEY'),
+    'api_secret': config('CLOUD_SECRET'),
+}

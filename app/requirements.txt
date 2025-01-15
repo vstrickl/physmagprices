@@ -1,0 +1,9 @@
+cloudinary
+Django
+gunicorn
+Pillow
+psycopg2-binary
+python-decouple
+qrcode
+requests
+whitenoise

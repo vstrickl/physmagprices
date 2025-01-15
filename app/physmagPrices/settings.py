@@ -44,10 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Native Apps
+    'prices',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -178,3 +182,6 @@ CLOUDINARY = {
     'api_key': config('CLOUD_API_KEY'),
     'api_secret': config('CLOUD_SECRET'),
 }
+
+# Maximum size for uploaded files (in bytes)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB

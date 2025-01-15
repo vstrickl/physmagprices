@@ -2,4 +2,4 @@
 # Set up networking, environment variables, etc.
 
 # Run the application (e.g., Gunicorn, Django, or other)
-gunicorn --bind 0.0.0.0:8000 physmagPrices.wsgi:application --chdir app
+gunicorn --timeout 120 --bind 0.0.0.0:8000 physmagPrices.wsgi:application --chdir app

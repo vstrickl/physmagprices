@@ -165,16 +165,10 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# The URL or named URL pattern where requests are redirected for login when
-# using the login_required() decorator, LoginRequiredMixin, or AccessMixin.
-# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-LOGIN_URL
-
-LOGIN_URL = 'login'
-
 # CSRF Tokens
 # https://docs.djangoproject.com/en/4.2/howto/csrf/
 
-CSRF_TRUSTED_ORIGINS = ['https://qrcodes.physiquemagnifique.com','http://127.0.0.1:8000']
+CSRF_TRUSTED_ORIGINS = ['https://prices.physiquemagnifique.com','http://127.0.0.1:8000']
 
 # Cloudinary
 CLOUDINARY = {

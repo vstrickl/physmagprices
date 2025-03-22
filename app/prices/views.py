@@ -8,12 +8,14 @@ from .models import UploadFile
 def prices(request):
     """This function renders the Offers Document to the home page."""
     header = "PhysMag Prices"
+    signup_url = "https://www.mymemberaccount.com/member-enrollment/10495"
 
     # Fetch all uploaded files
     uploaded_files = UploadFile.objects.all()
 
     context = {
         'header':header,
+        'signup_url':signup_url,
         'uploaded_files': uploaded_files,
     }
 

@@ -1,5 +1,23 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block body %}
-    {% include 'layout/body.html'%}
-{% endblock %}
+<head>
+    
+    {% block header %} 
+        {% include 'layout/header.html'%} 
+    {% endblock %}
+
+</head>
+
+<body>
+    <div class="container-fluid p-0">
+        {% block body %}
+            {% include 'layout/body.html'%}
+        {% endblock %}
+
+        {% block footer %}
+            {% include 'layout/footer.html'%}
+        {% endblock %}
+    </div>
+</body>
+</html>

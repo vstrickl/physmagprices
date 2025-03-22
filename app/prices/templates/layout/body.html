@@ -1,3 +1,7 @@
 {% for file in uploaded_files %}
-    <img src="{{ file.image.url }}" class="img-fluid" alt="{{ file.name }}">
+    <img
+        src="{{ file.image.url }}"
+        class="img-fluid w-100 d-block"
+        alt="{{ file.name }}"
+    >
 {% endfor %}

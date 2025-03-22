@@ -1,0 +1,21 @@
+footer {
+    background: #00B8D2;
+    position: sticky;
+    bottom: 0;
+}
+
+.btn {
+    border-radius: 0.5 !important;
+}
+.button-hover:hover {
+    background-color: transparent;
+    color: #f8f9fa;            /* text color like outline-light */
+    border-color: #f8f9fa;
+}
+
+a {
+    color: #00B8D2 !important;
+  }
+a:hover {
+    color: white!important;
+}
